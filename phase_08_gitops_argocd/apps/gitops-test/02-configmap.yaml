@@ -7,4 +7,4 @@ data:
   environment: lab
   platform: data-platform
   managedBy: argocd
-  version: "1"
+  version: "2"
