@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: data-platform-gitops-test
+  namespace: argocd
+
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/vagotec/data-platform-lab.git
+    targetRevision: main
+    path: phase_08_gitops_argocd/apps/gitops-test
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: gitops-test
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+
+    syncOptions:
+      - CreateNamespace=true
