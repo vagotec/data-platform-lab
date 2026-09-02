@@ -1,0 +1,23 @@
+{
+  "type": "record",
+  "name": "Customer",
+  "namespace": "com.dataplatform.customer",
+  "fields": [
+    {
+      "name": "id",
+      "type": "string"
+    },
+    {
+      "name": "firstName",
+      "type": "string"
+    },
+    {
+      "name": "lastName",
+      "type": "string"
+    },
+    {
+      "name": "email",
+      "type": "string"
+    }
+  ]
+}

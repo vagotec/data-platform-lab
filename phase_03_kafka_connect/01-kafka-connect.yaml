@@ -1,0 +1,53 @@
+apiVersion: kafka.strimzi.io/v1
+kind: KafkaConnect
+metadata:
+  name: data-platform-connect
+  namespace: kafka
+  annotations:
+    strimzi.io/use-connector-resources: "true"
+
+spec:
+  version: 4.3.1
+  replicas: 3
+
+  image: localhost:5001/data-platform-kafka-connect:4.3.1-debezium-3.6.1
+
+  bootstrapServers: data-platform-kafka-kafka-bootstrap:9092
+
+  groupId: data-platform-connect
+  configStorageTopic: data-platform-connect-configs
+  offsetStorageTopic: data-platform-connect-offsets
+  statusStorageTopic: data-platform-connect-status
+
+  config:
+    config.storage.replication.factor: 3
+    offset.storage.replication.factor: 3
+    status.storage.replication.factor: 3
+
+    key.converter: org.apache.kafka.connect.json.JsonConverter
+    value.converter: org.apache.kafka.connect.json.JsonConverter
+
+    key.converter.schemas.enable: false
+    value.converter.schemas.enable: false
+
+  template:
+    pod:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: workload
+                    operator: In
+                    values:
+                      - platform
+
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: strimzi.io/cluster
+                    operator: In
+                    values:
+                      - data-platform-connect
+              topologyKey: kubernetes.io/hostname

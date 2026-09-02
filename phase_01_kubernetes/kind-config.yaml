@@ -1,0 +1,44 @@
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+
+nodes:
+  - role: control-plane
+
+  # Kafka workers
+  - role: worker
+    labels:
+      workload: kafka
+
+  - role: worker
+    labels:
+      workload: kafka
+
+  - role: worker
+    labels:
+      workload: kafka
+
+  # Platform workers
+  - role: worker
+    labels:
+      workload: platform
+
+  - role: worker
+    labels:
+      workload: platform
+
+  - role: worker
+    labels:
+      workload: platform
+
+  # Database workers
+  - role: worker
+    labels:
+      workload: database
+
+  - role: worker
+    labels:
+      workload: database
+
+  - role: worker
+    labels:
+      workload: database

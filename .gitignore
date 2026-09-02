@@ -1,0 +1,78 @@
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+
+# Java / Maven
+**/target/
+*.class
+
+# Local registry / temporary artifacts
+*.tar
+*.tar.gz
+
+# Secrets
+*.pem
+*.key
+*.crt
+*.p12
+*.jks
+.env
+.env.*
+
+# Kubernetes secrets
+*secret*.yaml
+*secrets*.yaml
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+
+# Maven / Java build output
+**/target/
+*.jar
+*.war
+*.ear
+
+# Downloaded Kafka Connect / Debezium plugins
+phase_03_kafka_connect/plugins/
+
+# Source backup copies - Git provides version history
+*.java.v*
+*.bak
+*.backup
+
+# Downloaded archives
+*.zip
+*.tgz
+*.tar
+*.tar.gz
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Local generated runtime data
+data/
+logs/
+tmp/
+
+# Credentials and secrets
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+*secret*.yaml
+*secrets*.yaml
+
+# Local connector manifest contains lab credentials
+phase_05_debezium_cdc/01-postgres-connector.yaml

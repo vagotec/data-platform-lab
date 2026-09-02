@@ -1,0 +1,28 @@
+apiVersion: registry.apicur.io/v1
+kind: ApicurioRegistry3
+metadata:
+  name: data-platform-registry
+  namespace: schema-registry
+
+spec:
+  app:
+    replicas: 1
+
+    storage:
+      type: kafkasql
+      kafkasql:
+        bootstrapServers: data-platform-kafka-kafka-bootstrap.kafka.svc.cluster.local:9092
+
+    podTemplateSpec:
+      spec:
+        nodeSelector:
+          workload: platform
+
+  ui:
+    enabled: true
+    replicas: 1
+
+    podTemplateSpec:
+      spec:
+        nodeSelector:
+          workload: platform

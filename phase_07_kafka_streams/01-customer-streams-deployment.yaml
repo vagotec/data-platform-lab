@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: customer-streams
+  namespace: kafka
+  labels:
+    app: customer-streams
+
+spec:
+  replicas: 3
+
+  selector:
+    matchLabels:
+      app: customer-streams
+
+  template:
+    metadata:
+      labels:
+        app: customer-streams
+
+    spec:
+      nodeSelector:
+        workload: platform
+
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchLabels:
+              app: customer-streams
+
+      containers:
+        - name: customer-streams
+
+          image: localhost:5001/data-platform-customer-streams:1.0.0
+
+          imagePullPolicy: Always
+
+          env:
+            - name: KAFKA_BOOTSTRAP_SERVERS
+              value: data-platform-kafka-kafka-bootstrap.kafka.svc.cluster.local:9092
+
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: "1"
+              memory: 1Gi
